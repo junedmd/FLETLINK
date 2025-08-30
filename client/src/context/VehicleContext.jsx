@@ -1,7 +1,7 @@
 import { createContext, useContext, useState, useEffect } from "react";
 import axios from "axios";
 import toast from "react-hot-toast";
-
+const API = import.meta.env.VITE_API_URL;
 const VehicleContext = createContext();
 
 
@@ -13,7 +13,7 @@ export const VehicleProvider = ({ children }) => {
  
   const fetchVehicles = async () => {
     try {
-      const res = await axios.get("http://localhost:5000/api/vehicles");
+      const res = await axios.get(`${API}/api/vehicles`);
       setVehicles(res.data.data); 
     } catch (err) {
       console.error("Error fetching vehicles:", err);
@@ -23,7 +23,7 @@ export const VehicleProvider = ({ children }) => {
   
   const fetchBookings = async () => {
     try {
-      const res = await axios.get("http://localhost:5000/api/bookings");
+      const res = await axios.get(`${API}/api/bookings`);
       setBooking(res.data.data);
     } catch (err) {
       console.error("Error fetching bookings:", err);
@@ -35,7 +35,7 @@ export const VehicleProvider = ({ children }) => {
 
   const cancelBooking = async (id) => {
     try {
-      await axios.delete(`http://localhost:5000/api/bookings/${id}`);
+      await axios.delete(`${API}/api/bookings/${id}`);
        toast.success("Booking Cancel");
       fetchBookings(); 
     } catch (err) {

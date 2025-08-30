@@ -2,6 +2,7 @@ import { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
+const API = import.meta.env.VITE_API_URL;
 export default function SearchBook() {
   const [query, setQuery] = useState({
     capacityRequired: "",
@@ -19,7 +20,7 @@ export default function SearchBook() {
 
   const handleSearch = async () => {
     try {
-      const res = await axios.get("http://localhost:5000/api/vehicles/available", { params: query });
+      const res = await axios.get(`${API}/api/vehicles/available`, { params: query });
 
       if (res?.data?.vehicles?.length > 0) {
         setResults(res.data.vehicles);
@@ -31,14 +32,15 @@ export default function SearchBook() {
       }
     } catch (err) {
       console.error("Search error:", err);
-      setMessage("Error: " + (err.response?.data?.message || "Something went wrong"));
+      toast.error("Please fill all the detail Correct" );
+      setMessage("Error: " + (err.response?.data?.message || "Please filled all the detail correct"));
     }
   };
 
   const handleBook = async (vehicleId) => {
     try {
       const body = { ...query, vehicleId, customerId: "cust123" };
-      const res = await axios.post("http://localhost:5000/api/bookings", body);
+      const res = await axios.post(`${API}/api/bookings`, body);
       
       toast.success("Booking Confirmed successfully");
       
@@ -91,7 +93,7 @@ export default function SearchBook() {
         <button
           type="button"
           onClick={handleSearch}
-          className="w-full bg-blue-600 hover:bg-blue-700 text-white py-2 rounded-xl font-semibold transition duration-200"
+          className="w-full bg-blue-600 hover:bg-blue-700 text-white cursor-pointer py-2 rounded-xl font-semibold transition duration-200"
         >
           Search
         </button>
@@ -122,7 +124,7 @@ export default function SearchBook() {
               </div>
               <button
                 onClick={() => handleBook(v._id)}
-                className="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-xl transition duration-200"
+                className="bg-green-600 hover:bg-green-700 text-white px-4 cursor-pointer  py-2 rounded-xl transition duration-200"
               >
                 Book Now
               </button>

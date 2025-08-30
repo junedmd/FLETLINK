@@ -2,6 +2,7 @@ import React from 'react'
 import { useState } from 'react'
 import axios from "axios";
 import toast from "react-hot-toast";
+const API = import.meta.env.VITE_API_URL;
 function Vehicles() {
 
   const [tyres, setTyres] = useState("");
@@ -10,7 +11,7 @@ function Vehicles() {
 
   const submitData = async () => {
     try {
-      const response = await axios.post("http://localhost:5000/api/vehicles", {
+      const response = await axios.post(`${API}/api/vehicles`, {
         tyres,
         name,
         capacityKg
@@ -25,11 +26,12 @@ function Vehicles() {
 
       } else {
        
-          toast.error("Failed to Add Vehicles!");
+          // toast.error("Failed to Add Vehicles!");
+           toast.error("Fill All the Deatails Correct!");
       }
     } catch (error) {
       console.error("Signup error:", error);
-       toast.error("Failed to Add booking!");
+         toast.error("Fill All the Deatails Correct!");
     }
   }
   return (
@@ -62,7 +64,7 @@ function Vehicles() {
       <button
         type="button"
         onClick={submitData}
-        className="w-full bg-blue-600 hover:bg-blue-700 text-white py-2 rounded-lg font-medium transition duration-200 text-sm"
+        className="w-full bg-blue-600 hover:bg-blue-700 text-white cursor-pointer py-2 rounded-lg font-medium transition duration-200 text-sm"
       >
         Add
       </button>

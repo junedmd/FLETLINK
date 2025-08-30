@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import axios from "axios";
+
 import { useVehicleContext } from "../context/VehicleContext";
 
 export default function Bookings() {
@@ -60,7 +60,7 @@ const getVehiclTyres = (vehicleId) => {
 
             <button
               onClick={() => cancelBooking(b._id)}
-              className="mt-3 bg-red-600 hover:bg-red-700 text-white px-4 py-1 rounded-full font-medium shadow-sm hover:shadow-md transition duration-200 text-sm"
+              className="mt-3 bg-red-600 hover:bg-red-700 text-white px-4 py-1 rounded-full cursor-pointer font-medium shadow-sm hover:shadow-md transition duration-200 text-sm"
             >
               Cancel
             </button>
